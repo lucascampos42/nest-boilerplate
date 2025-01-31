@@ -1,0 +1,43 @@
+meta {
+  name: Update Me
+  type: http
+  seq: 8
+}
+
+patch {
+  url: {{host}}/user/me/update
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwt}}
+}
+
+body:json {
+  {
+    "username": "Teste",
+    "person": {
+      "name": "João da Silva",
+      "fantasyName": "Empresa XYZ",
+      "phone1": "553199999-9999",
+      "phone2": "553198888-8888",
+      "birthDate": "1990-05-21T00:00:00.000Z",
+      "notes": "Cliente VIP",
+      "address": {
+        "street": "Rua das Flores",
+        "number": "123",
+        "neighborhood": "Centro",
+        "city": "São Paulo",
+        "state": "SP",
+        "zipCode": "12345-678"
+      }
+    }
+  }
+  
+}
+
+body:multipart-form {
+  identifier: lucas
+  password: A12345a@++
+}

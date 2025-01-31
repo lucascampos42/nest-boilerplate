@@ -1,0 +1,15 @@
+meta {
+  name: Get Persons
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/user/person
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwt}}
+}

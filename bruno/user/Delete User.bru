@@ -1,0 +1,20 @@
+meta {
+  name: Delete User
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{host}}/user/cm1w9ueqx0000uoznba4pjv8x
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwt}}
+}
+
+body:multipart-form {
+  identifier: lucas
+  password: A12345a@++
+}

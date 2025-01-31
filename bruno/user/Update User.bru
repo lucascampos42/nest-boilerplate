@@ -1,0 +1,27 @@
+meta {
+  name: Update User
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{host}}/user/cm25i34fj0000482crg7254ad
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwt}}
+}
+
+body:json {
+  {
+    "role": "ADMIN"
+  }
+  
+}
+
+body:multipart-form {
+  identifier: lucas
+  password: A12345a@++
+}
