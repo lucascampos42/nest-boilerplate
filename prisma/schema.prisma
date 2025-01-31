@@ -20,24 +20,29 @@ model User {
   activatedAt DateTime?
   termsIp     String?   @db.VarChar(45)
   terms       Boolean   @default(false)
-  role        Role      @default(CLIENT)
   personId    Int?      @unique
   person      Person?   @relation(fields: [personId], references: [id])
-  posts       Post[]
+
+  permissions Permission[]
 
   @@map("user")
 }
 
-enum Role {
-  CLIENT
-  ADMIN
-  EMPLOYEE
-  FINANCIAL
-  SALESPERSON
-  TECHNICIAN
-  SOCIALMEDIA
-  SUPERVISOR
-  SUPERADMIN
+model Permission {
+  id        Int      @id @default(autoincrement())
+  userId    String // ID do usuário relacionado
+  interface String   @db.VarChar(15) // Nome do módulo/interface (ex.: "produtos", "clientes", etc.)
+  view      Boolean  @default(false) // Se pode visualizar
+  add       Boolean  @default(false) // Se pode adicionar
+  edit      Boolean  @default(false) // Se pode editar
+  delete    Boolean  @default(false) // Se pode excluir
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, interface]) // Garante que um usuário só tenha uma permissão por interface
+  @@map("permission")
 }
 
 model Person {

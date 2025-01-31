@@ -1,7 +1,7 @@
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
 import { EmailService } from './email.service';
-import { TokenUtils } from '../../routes/auth/utils/token.utils';
+import { TokenUtils } from '../../modules/auth/utils/token.utils';
 
 @Processor('email')
 export class EmailProcessor extends WorkerHost {
