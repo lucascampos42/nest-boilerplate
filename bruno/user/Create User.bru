@@ -1,0 +1,31 @@
+meta {
+  name: Create User
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/user
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwt}}
+}
+
+body:json {
+  {
+    "email": "user@examples.com",
+    "username": "johndoea",
+    "cpfCnpj": "12022237617",
+    "password": "SenhaForte123",
+    "role": "CLIENT"
+  }
+  
+}
+
+body:multipart-form {
+  identifier: lucas
+  password: A12345a@++
+}

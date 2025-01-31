@@ -9,10 +9,27 @@ async function main() {
     create: {
       email: 'teste@teste.com',
       username: 'teste',
-      password: '$2b$10$H62/bxhk4DJtNkNXzsCNJuDPlFKHiHtHPTkl6eW78IreD/sYCPiQK',
+      password: '$2b$10$H62/bxhk4DJtNkNXzsCNJuDPlFKHiHtHPTkl6eW78IreD/sYCPiQK', // 123456
       isActive: true,
       createdAt: new Date(),
-      role: 'ADMIN',
+      termsAccepted: true,
+      permissions: {
+        create: [
+          {
+            interface: 'user',
+            view: true,
+            add: true,
+            edit: true,
+            delete: true,
+          },
+          {
+            interface: 'permission',
+            view: true,
+            add: true,
+            edit: true,
+          },
+        ],
+      },
     },
   });
 }

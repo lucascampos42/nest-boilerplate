@@ -1,0 +1,34 @@
+meta {
+  name: Create Person
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{host}}/user/person
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwt}}
+}
+
+body:json {
+  {
+    "name": "João da Silva",
+    "fantasyName": "Empresa XYZ",
+    "cpfCnpj": "12345678900",
+    "email": "joao.silva@email.com",
+    "phone1": "553199999-9999",
+    "phone2": "553198888-8888",
+    "birthDate": "1990-05-21T00:00:00.000Z",
+    "notes": "Cliente VIP"
+  }
+  
+}
+
+body:multipart-form {
+  identifier: lucas
+  password: A12345a@++
+}
