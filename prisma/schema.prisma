@@ -8,20 +8,23 @@ datasource db {
 }
 
 model User {
-  id          String    @id @default(cuid())
-  email       String    @unique @db.VarChar(80)
-  username    String    @unique @db.VarChar()
-  cpfCnpj     String?   @db.VarChar(14)
-  password    String    @db.VarChar(128)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
-  isActive    Boolean   @default(false)
-  activatedAt DateTime?
-  termsIp     String?   @db.VarChar(45)
-  terms       Boolean   @default(false)
-  personId    Int?      @unique
-  person      Person?   @relation(fields: [personId], references: [id])
+  id            String    @id @default(cuid())
+  email         String    @unique @db.VarChar(80)
+  username      String    @unique @db.VarChar()
+  cpfCnpj       String?   @db.VarChar(14)
+  password      String    @db.VarChar(128)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+  isDeleted     Boolean   @default(false)
+  isActive      Boolean   @default(false)
+  activatedAt   DateTime?
+  termsIp       String?   @db.VarChar(45)
+  termsAccepted Boolean   @default(false)
+  personId      Int?      @unique
+  tokenVersion  Int       @default(0)
+
+  person Person? @relation(fields: [personId], references: [id])
 
   permissions Permission[]
 
@@ -46,24 +49,24 @@ model Permission {
 }
 
 model Person {
-  id          Int        @id @default(autoincrement())
-  name        String     @db.VarChar(80)
-  fantasyName String?    @db.VarChar(80)
-  type        PersonType
-  cpfCnpj     String?    @db.VarChar(14)
-  cpfIe       String?    @db.VarChar(9)
-  email       String?    @db.VarChar(40)
-  phone1      String?    @db.VarChar(12)
-  phone2      String?    @db.VarChar(12)
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  fantasyName String?   @db.VarChar(255)
+  cpfCnpj     String?   @db.VarChar(11)
+  email       String    @unique @db.VarChar(80)
+  phone1      String?   @db.VarChar(20)
+  phone2      String?   @db.VarChar(20)
   birthDate   DateTime?
   notes       String?
-  defaulter   Boolean    @default(false)
+  defaulter   Boolean   @default(false)
   photo       String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   deletedAt   DateTime?
-  user        User?
-  addresses   Address[]
+  isDeleted   Boolean   @default(false)
+  user        User?     @relation
+  addressId   Int?      @unique
+  address     Address?  @relation(fields: [addressId], references: [id])
 
   @@map("person")
 }
@@ -76,18 +79,18 @@ enum PersonType {
 
 model Address {
   id           Int       @id @default(autoincrement())
-  place        String    @db.VarChar(140)
-  number       String    @db.VarChar(10)
-  complement   String    @db.VarChar(50)
-  neighborhood String    @db.VarChar(60)
-  city         String    @db.VarChar(60)
-  state        String    @db.VarChar(2)
-  zipCode      String    @db.VarChar(10)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime?
-  personId     Int
-  person       Person    @relation(fields: [personId], references: [id])
+  street       String    @db.VarChar(120) // Rua, avenida, etc.
+  complement   String?   @db.VarChar(30) // Complemento (bloco, apto, etc.)
+  number       String    @db.VarChar(10) // Número do imóvel
+  neighborhood String    @db.VarChar(100) // Bairro
+  city         String    @db.VarChar(100) // Cidade
+  state        String    @db.VarChar(2) // Estado
+  zipCode      String    @db.VarChar(10) // CEP
+  createdAt    DateTime  @default(now()) // Data de criação
+  updatedAt    DateTime  @updatedAt // Data de atualização
+  deletedAt    DateTime? // Data de exclusão
+  isDeleted    Boolean   @default(false) // Indica se o registro foi excluído
+  person       Person?
 
   @@map("address")
 }

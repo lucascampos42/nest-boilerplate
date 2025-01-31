@@ -34,5 +34,5 @@ export class RegisterUserDto {
 
   @IsBoolean()
   @ApiProperty({ type: 'boolean' })
-  terms: boolean;
+  termsAccepted: boolean;
 }
