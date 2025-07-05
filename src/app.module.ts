@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './application/modules/auth.module';
 import { UserModule } from './application/modules/user.module';
-import { PrismaService } from './infrastructure/database/prisma.service';
+import { PrismaService } from './services/prisma.service';
 
 @Module({
   imports: [AuthModule, UserModule],
