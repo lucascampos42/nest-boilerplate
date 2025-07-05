@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLIENTE
+  ADMIN
+  GERENTE
+  FUNCIONARIO
+  FINANCEIRO
+}
+
+model User {
+  // --- Campos de Identificação ---
+  userId    Int     @id @default(autoincrement())
+  username  String  @unique
+  name      String
+  email     String  @unique
+  cpf       String  @unique
+  telefone  String?
+  avatarUrl String?
+
+  // --- Campos de Segurança ---
+  password             String
+  role                 Role      @default(CLIENTE)
+  lastLogin            DateTime? // Adicionado para auditoria
+  passwordResetToken   String? // Adicionado para "esqueci a senha"
+  passwordResetExpires DateTime? // Adicionado para "esqueci a senha"
+
+  // --- Campos de Controle ---
+  active    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
