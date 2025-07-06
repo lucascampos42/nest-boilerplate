@@ -22,7 +22,7 @@ model User {
   username  String  @unique
   name      String
   email     String  @unique
-  cpf       String  @unique
+  cpf       String? @unique
   telefone  String?
   avatarUrl String?
 
@@ -39,3 +39,4 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
+
